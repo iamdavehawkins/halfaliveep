@@ -518,6 +518,174 @@
             color: var(--color-secondary);
         }
         
+        /* Lyrics Display */
+        .lyrics-player {
+            display: none;
+            padding: 12px 15px;
+            text-align: center;
+            border-top: 1px solid rgba(79, 106, 137, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .lyrics-player.active {
+            display: block;
+        }
+        
+        .lyrics-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.3s ease-out;
+        }
+        
+        .lyric-line {
+            font-family: 'Degular Text', Georgia, serif;
+            transition: all 0.3s ease-out;
+            max-width: 100%;
+            line-height: 1.3;
+            padding: 0 10px;
+        }
+        
+        .lyric-intro {
+            font-family: 'Vulf Mono', 'Courier New', monospace;
+            font-size: 0.7em;
+            font-style: italic;
+            color: var(--color-secondary);
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+        
+        .lyric-line.prev {
+            font-size: 0.8em;
+            color: var(--color-secondary);
+            opacity: 0.5;
+        }
+        
+        .lyric-line.current {
+            font-size: 1em;
+            color: var(--color-accent);
+            opacity: 1;
+        }
+        
+        .lyric-line.next {
+            font-size: 0.8em;
+            color: var(--color-secondary);
+            opacity: 0.5;
+        }
+        
+        .lyric-line.hidden {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Credits Link */
+        .credits-link {
+            font-family: 'Vulf Mono', 'Courier New', monospace;
+            font-size: 0.7em;
+            font-style: italic;
+            color: var(--color-secondary);
+            text-decoration: none;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .credits-link:hover {
+            color: var(--color-accent);
+            opacity: 1;
+        }
+        
+        /* Credits Modal */
+        .credits-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .credits-modal.active {
+            display: flex;
+        }
+        
+        .credits-modal-content {
+            background: var(--color-charcoal);
+            border: 1px solid var(--color-secondary);
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .credits-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--color-secondary);
+            font-size: 1.5em;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            transition: color 0.2s ease;
+        }
+        
+        .credits-modal-close:hover {
+            color: var(--color-accent);
+        }
+        
+        .credits-modal h3 {
+            font-family: 'Compadre Extended', Georgia, serif;
+            font-size: 1.3em;
+            color: var(--color-paper);
+            margin: 0 0 16px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .credits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .credits-list li {
+            font-family: 'Degular Text', Georgia, serif;
+            font-size: 0.95em;
+            color: var(--color-paper);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(79, 106, 137, 0.2);
+        }
+        
+        .credits-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .credits-role {
+            font-family: 'Vulf Mono', 'Courier New', monospace;
+            font-size: 0.8em;
+            font-style: italic;
+            color: var(--color-secondary);
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .credits-name {
+            color: var(--color-accent);
+        }
+        
         /* Tracklist Links Section */
         .song-links {
             display: grid;
@@ -963,6 +1131,7 @@
                         <div class="track-title"><a href="https://withlove.iamdavehawkins.com/" target="_blank" rel="noopener">With Love</a></div>
                         <div class="track-duration">4:02</div>
                     </div>
+                    <button class="credits-link" data-song="withlove">credits</button>
                 </li>
                 <li class="track" data-src="audio/02 A Loop.wav">
                     <span class="track-number">02</span>
@@ -978,6 +1147,7 @@
                         <div class="track-title"><a href="https://aloop.iamdavehawkins.com/" target="_blank" rel="noopener">A Loop</a></div>
                         <div class="track-duration">4:38</div>
                     </div>
+                    <button class="credits-link" data-song="aloop">credits</button>
                 </li>
                 <li class="track" data-src="audio/03 Flicker.wav">
                     <span class="track-number">03</span>
@@ -993,6 +1163,7 @@
                         <div class="track-title"><a href="https://flicker.iamdavehawkins.com/" target="_blank" rel="noopener">Flicker</a></div>
                         <div class="track-duration">4:37</div>
                     </div>
+                    <button class="credits-link" data-song="flicker">credits</button>
                 </li>
                 <li class="track" data-src="audio/04 Good Behavior.wav">
                     <span class="track-number">04</span>
@@ -1008,6 +1179,7 @@
                         <div class="track-title"><a href="https://goodbehavior.iamdavehawkins.com/" target="_blank" rel="noopener">Good Behavior</a></div>
                         <div class="track-duration">3:12</div>
                     </div>
+                    <button class="credits-link" data-song="goodbehavior">credits</button>
                 </li>
                 <li class="track" data-src="audio/05 Half Alive.wav">
                     <span class="track-number">05</span>
@@ -1023,6 +1195,7 @@
                         <div class="track-title">Half Alive</div>
                         <div class="track-duration">3:15</div>
                     </div>
+                    <button class="credits-link" data-song="halfalive">credits</button>
                 </li>
             </ul>
             
@@ -1037,6 +1210,13 @@
                 <div class="time-display">
                     <span id="currentTime">0:00</span>
                     <span id="totalTime">0:00</span>
+                </div>
+                <div class="lyrics-player" id="lyricsPlayer">
+                    <div class="lyrics-scroll" id="lyricsScroll">
+                        <div class="lyric-line prev" id="lyricPrev"></div>
+                        <div class="lyric-line current" id="lyricCurrent"></div>
+                        <div class="lyric-line next" id="lyricNext"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1204,6 +1384,15 @@
         <p>&copy; <script>document.write(new Date().getFullYear());</script> Dave Hawkins | <a href="https://links.iamdavehawkins.com">iamdavehawkins.com</a></p>
     </footer>
 
+    <!-- Credits Modal -->
+    <div class="credits-modal" id="creditsModal">
+        <div class="credits-modal-content">
+            <button class="credits-modal-close" id="creditsModalClose" aria-label="Close">&times;</button>
+            <h3 id="creditsModalTitle">Credits</h3>
+            <ul class="credits-list" id="creditsList"></ul>
+        </div>
+    </div>
+
     <script>
         // Simple audio player
         const audio = new Audio();
@@ -1215,11 +1404,248 @@
         const progressContainer = document.getElementById('progressContainer');
         const currentTimeEl = document.getElementById('currentTime');
         const totalTimeEl = document.getElementById('totalTime');
+        const lyricsPlayer = document.getElementById('lyricsPlayer');
+        const lyricPrev = document.getElementById('lyricPrev');
+        const lyricCurrent = document.getElementById('lyricCurrent');
+        const lyricNext = document.getElementById('lyricNext');
+        
+        const artistName = "Dave Hawkins";
+        
+        // All lyrics data
+        const allLyrics = {
+            "With Love": [
+                { time: 6.09, text: "Look at what she is wearing, your beautiful eyes" },
+                { time: 12.24, text: "Taste how a michelin star shines, the perfect night" },
+                { time: 18.28, text: "Don't worry wake up early exercise" },
+                { time: 29.97, text: "Listen to what we are saying, your beautiful ears" },
+                { time: 36.26, text: "The things around you are breaking, but don't be scared" },
+                { time: 42.13, text: "We have the things that you need, and we'll be there" },
+                { time: 58.65, text: "So just take your time" },
+                { time: 61.74, text: "We'll be right outside" },
+                { time: 64.70, text: "I will always wait for you" },
+                { time: 70.66, text: "See the colors shine" },
+                { time: 73.58, text: "Let it fill your mind" },
+                { time: 76.62, text: "Something sparkling something new" },
+                { time: 82.49, text: "Feel the touch of the fabric, your beautiful skin" },
+                { time: 88.66, text: "Atomic purified air, please breathe deeply my friend" },
+                { time: 94.62, text: "No hesitation the cleansing now begins" },
+                { time: 106.64, text: "You feel the nutrients working, your beautiful blood" },
+                { time: 112.51, text: "A custom treatment for you, calculated with love" },
+                { time: 118.67, text: "We guarantee, your youth will be restored" },
+                { time: 134.99, text: "So just take your time" },
+                { time: 138.19, text: "We'll be right outside" },
+                { time: 141.29, text: "I will always wait for you" },
+                { time: 147.12, text: "See the colors shine" },
+                { time: 150.13, text: "Let it fill your mind" },
+                { time: 153.29, text: "Something sparkling something new" }
+            ],
+            "A Loop": [
+                { time: 21.83, text: "I'm going through my pockets, i think i lost something" },
+                { time: 27.84, text: "I don't know when i dropped it, where do we begin" },
+                { time: 33.83, text: "The small things fall softly, and you don't feel them go" },
+                { time: 39.92, text: "But you're gonna hear it, the quiet always grows" },
+                { time: 45.79, text: "Caught in a loop, all day, always" },
+                { time: 51.71, text: "Caught in a loop, no light, no way" },
+                { time: 57.73, text: "Caught in a loop, all day, always" },
+                { time: 63.77, text: "Caught in a loop, we play, the game" },
+                { time: 82.55, text: "The wheel keeps on spinning, but the thread pulls thin" },
+                { time: 88.72, text: "Tradin what we're given, for the place we're in" },
+                { time: 94.53, text: "The season keeps on changin, but the hours don't bend" },
+                { time: 100.69, text: "And everything we're handed, expected to expend" },
+                { time: 106.50, text: "Caught in a loop, all day, always" },
+                { time: 112.41, text: "Caught in a loop, no light, no way" },
+                { time: 118.54, text: "Caught in a loop, all day, always" },
+                { time: 124.47, text: "Caught in a loop, we play, the game" },
+                { time: 130.57, text: "Take a deep breath, this is such a good life" },
+                { time: 133.10, text: "Show some gratitude everything is just fine" },
+                { time: 136.33, text: "Discomfort means progress, embrace the unknown" },
+                { time: 139.38, text: "The hustle is holy this pain is your own" },
+                { time: 142.38, text: "Optimize effort, not just your hours" },
+                { time: 145.46, text: "Every setback contains hidden powers" },
+                { time: 148.43, text: "Growth begins when excuses end" },
+                { time: 150.83, text: "You have the same 24 hours as them, friend" },
+                { time: 154.44, text: "Trust in the process, results will appear" },
+                { time: 157.27, text: "Your dreams are just metrics you haven't made clear" },
+                { time: 160.25, text: "We're all in this together, remember your why" },
+                { time: 163.29, text: "Align with the vision, and keep reaching high" },
+                { time: 166.38, text: "No need for rest when you're living your purpose" },
+                { time: 169.23, text: "Success is a service, and you are in service" },
+                { time: 172.36, text: "Your effort is valued, your future is fated" },
+                { time: 175.00, text: "I will love you forever, not a minute wasted" },
+                { time: 178.57, text: "I will love you forever, not a minute wasted" },
+                { time: 190.48, text: "I will love you forever, not a minute wasted" },
+                { time: 202.42, text: "I will love you forever, not a minute wasted" },
+                { time: 214.38, text: "I will love you forever, not a minute wasted" },
+                { time: 226.41, text: "I will love you forever, not a minute wasted" },
+                { time: 238.46, text: "I will love you forever, not a minute wasted" },
+                { time: 250.64, text: "I will love you forever, not a minute wasted" },
+                { time: 262.55, text: "I will love you forever, not a minute wasted" }
+            ],
+            "Flicker": [
+                { time: 23.76, text: "It's time to board three two one" },
+                { time: 26.56, text: "In your eyes i thought i saw the sun the same" },
+                { time: 29.67, text: "Sun's shining in my eyes now" },
+                { time: 31.93, text: "I wish said goodbye a million times just to keep you" },
+                { time: 35.52, text: "In my arms, so harm'd have to" },
+                { time: 37.61, text: "Break through me too one day you knew this is" },
+                { time: 41.34, text: "What you'd do, gotta find your truth" },
+                { time: 43.96, text: "What it means to one but everyone" },
+                { time: 46.72, text: "Is gonna hold their breath" },
+                { time: 52.23, text: "Not the end" },
+                { time: 55.24, text: "Not the arc" },
+                { time: 58.12, text: "Just a flicker in the dark" },
+                { time: 64.07, text: "Scene by scene" },
+                { time: 67.02, text: "Cut quickly" },
+                { time: 70.03, text: "On a reel that won't repeat" },
+                { time: 84.64, text: "They paved the stars, they sold the sky" },
+                { time: 87.38, text: "Bought all the ships so only they could fly" },
+                { time: 90.26, text: "They wrote the rules, they hid the map" },
+                { time: 93.29, text: "They lock the doors, they don't look back" },
+                { time: 96.35, text: "They clip your wings, they say you're safe" },
+                { time: 99.20, text: "Then say you should say thanks for that" },
+                { time: 101.98, text: "Well you become a match, you become a key" },
+                { time: 105.18, text: "Make their kingdom catch, and everything" },
+                { time: 107.49, text: "Is gonna hold it's breath" },
+                { time: 113.10, text: "Not the end" },
+                { time: 116.03, text: "Not the arc" },
+                { time: 119.08, text: "Just a flicker in the dark" },
+                { time: 124.87, text: "Scene by scene" },
+                { time: 127.86, text: "Cut quickly" },
+                { time: 130.71, text: "On a reel that won't repeat" },
+                { time: 178.25, text: "Not the end" },
+                { time: 181.42, text: "Not the arc" },
+                { time: 184.27, text: "Just a flicker in the dark" },
+                { time: 190.01, text: "Scene by scene" },
+                { time: 193.25, text: "Cut quickly" },
+                { time: 196.19, text: "On a reel that won't repeat" },
+                { time: 221.14, text: "Oxygen holds you" },
+                { time: 224.19, text: "Just like i used to" },
+                { time: 227.16, text: "Oxygen holding you tight" },
+                { time: 233.17, text: "Oxygen holds you" },
+                { time: 236.01, text: "Just like i used to" },
+                { time: 239.18, text: "Oxygen holds you all night" }
+            ],
+            "Good Behavior": [
+                { time: 7.46, text: "She blew you kisses from the back seat as she pulled away" },
+                { time: 11.04, text: "She sank into the leather like she just got off the stage" },
+                { time: 14.92, text: "She threw her head back to the laugh track and the disarray" },
+                { time: 29.94, text: "She had that cold cold steel hid like a viper in the hay" },
+                { time: 33.52, text: "She walked so slow that noone noticed holsters on her legs" },
+                { time: 37.19, text: "Her eyes wore thunder like a zeus on someone's judgement day" },
+                { time: 44.74, text: "We know what you did, and what you deserve" },
+                { time: 48.12, text: "We know that you hid, who you really were" },
+                { time: 52.00, text: "We know we were kids, when you did your worst" },
+                { time: 55.67, text: "We know and were comin for ya, comin for ya" },
+                { time: 59.65, text: "We know what you did, and what you deserve" },
+                { time: 63.24, text: "We know that you hid, who you really were" },
+                { time: 66.92, text: "We know we were kids, when you did your worst" },
+                { time: 70.70, text: "We know and were comin for ya, comin for ya" },
+                { time: 96.26, text: "She wore the bruises of a father heiling from his grave" },
+                { time: 99.85, text: "Her veins tattooed with hate for any man who'd do the same" },
+                { time: 103.53, text: "She saw no dollars, saw no medal, saw no trophy case" },
+                { time: 118.56, text: "She had that good behavior now that she turned off the lights" },
+                { time: 122.04, text: "She had that good behavior not that she put up a fight" },
+                { time: 125.82, text: "She had that good behavior now they argue wrong or right" },
+                { time: 133.38, text: "We know what you did, and what you deserve" },
+                { time: 136.96, text: "We know that you hid, who you really were" },
+                { time: 140.74, text: "We know we were kids, when you did your worst" },
+                { time: 144.43, text: "We know and were comin for ya, comin for ya" },
+                { time: 148.11, text: "We know what you did, and what you deserve" },
+                { time: 151.49, text: "We know that you hid, who you really were" },
+                { time: 155.37, text: "We know we were kids, when you did your worst" },
+                { time: 159.06, text: "We know and were comin for ya, comin for ya" }
+            ],
+            "Half Alive": [
+                { time: 5.25, text: "I got a blank screen, on my iphone" },
+                { time: 8.22, text: "Turn on the tv, signal not found" },
+                { time: 11.19, text: "Reset the router, the red light's on" },
+                { time: 14.24, text: "Is it just me, why do I feel finally free" },
+                { time: 18.98, text: "No more scrolling" },
+                { time: 20.27, text: "Runnin away by being bored and" },
+                { time: 23.14, text: "Wasting the day all night until morning" },
+                { time: 26.10, text: "Couldn't I see children playin sun shinin on me, on me, on me" },
+                { time: 38.07, text: "And if it all were gone, wouldn't miss it in the morning" },
+                { time: 43.92, text: "When i see your eyes, all i ever wanted is" },
+                { time: 50.45, text: "By my side, not plugged into the wall" },
+                { time: 56.20, text: "And half alive" },
+                { time: 73.86, text: "Went to the place that i scrolled past" },
+                { time: 76.64, text: "Talked to the face from the group chat" },
+                { time: 79.43, text: "Why'd I hesitate, cuz kinda liked that" },
+                { time: 82.51, text: "What did I waste? Tryin to find out how to give myself grace" },
+                { time: 87.28, text: "From the gravity" },
+                { time: 88.47, text: "Pulling at me, trying to be my" },
+                { time: 91.46, text: "Everything, well why's it feel like nothing" },
+                { time: 94.44, text: "Just let me be, children singing sun shining on me, on me, on me" },
+                { time: 107.46, text: "And if it all were gone, wouldn't miss it in the morning" },
+                { time: 113.83, text: "When i see your eyes, all i ever wanted is" },
+                { time: 120.59, text: "By my side, not plugged into the wall" },
+                { time: 125.96, text: "And half alive" },
+                { time: 155.20, text: "And if it all were gone, wouldn't miss it in the morning" },
+                { time: 162.45, text: "When i see your eyes, all i ever wanted is" },
+                { time: 168.12, text: "By my side, not plugged into the wall" },
+                { time: 174.00, text: "And half alive" }
+            ]
+        };
+        
+        let currentLyricIndex = -1;
+        let currentLyrics = null;
+        let currentSongTitle = null;
         
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
             return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function getCurrentLyricIndex(time) {
+            if (!currentLyrics) return -1;
+            for (let i = currentLyrics.length - 1; i >= 0; i--) {
+                if (time >= currentLyrics[i].time) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        
+        function updateLyrics(time) {
+            if (!currentLyrics) return;
+            
+            const newIndex = getCurrentLyricIndex(time);
+            
+            if (newIndex !== currentLyricIndex) {
+                currentLyricIndex = newIndex;
+                
+                if (currentLyricIndex > 0) {
+                    lyricPrev.textContent = currentLyrics[currentLyricIndex - 1].text;
+                    lyricPrev.classList.remove('hidden', 'lyric-intro');
+                } else if (currentLyricIndex === 0) {
+                    lyricPrev.textContent = `${currentSongTitle} — ${artistName} — Lyrics`;
+                    lyricPrev.classList.remove('hidden');
+                    lyricPrev.classList.add('lyric-intro');
+                } else {
+                    lyricPrev.textContent = '';
+                    lyricPrev.classList.add('hidden');
+                }
+                
+                if (currentLyricIndex >= 0) {
+                    lyricCurrent.textContent = currentLyrics[currentLyricIndex].text;
+                    lyricCurrent.classList.remove('lyric-intro');
+                } else {
+                    lyricCurrent.textContent = `${currentSongTitle} — ${artistName} — Lyrics`;
+                    lyricCurrent.classList.add('lyric-intro');
+                }
+                
+                if (currentLyricIndex < currentLyrics.length - 1 && currentLyricIndex >= 0) {
+                    lyricNext.textContent = currentLyrics[currentLyricIndex + 1].text;
+                    lyricNext.classList.remove('hidden');
+                } else if (currentLyricIndex === -1 && currentLyrics.length > 0) {
+                    lyricNext.textContent = currentLyrics[0].text;
+                    lyricNext.classList.remove('hidden');
+                } else {
+                    lyricNext.textContent = '';
+                    lyricNext.classList.add('hidden');
+                }
+            }
         }
         
         function updateProgress() {
@@ -1228,6 +1654,9 @@
                 progressBar.style.width = percent + '%';
                 currentTimeEl.textContent = formatTime(audio.currentTime);
                 totalTimeEl.textContent = formatTime(audio.duration);
+                if (currentLyrics) {
+                    updateLyrics(audio.currentTime);
+                }
             }
         }
         
@@ -1254,6 +1683,19 @@
             if (currentTrack !== trackEl) {
                 audio.src = src;
                 currentTrack = trackEl;
+                currentLyricIndex = -1;
+                currentSongTitle = title;
+                
+                // Check if this track has lyrics
+                if (allLyrics[title]) {
+                    currentLyrics = allLyrics[title];
+                    lyricsPlayer.classList.add('active');
+                    currentLyricIndex = -2; // Reset to force update
+                    updateLyrics(0);
+                } else {
+                    currentLyrics = null;
+                    lyricsPlayer.classList.remove('active');
+                }
             }
             
             audio.play();
@@ -1296,7 +1738,93 @@
                 currentTrack.querySelector('.icon-play').style.display = 'block';
                 currentTrack.querySelector('.icon-pause').style.display = 'none';
                 nowPlaying.classList.remove('active');
+                lyricsPlayer.classList.remove('active');
                 currentTrack = null;
+                currentLyrics = null;
+                currentSongTitle = null;
+                currentLyricIndex = -1;
+            }
+        });
+        
+        // Credits Modal
+        const creditsData = {
+            withlove: {
+                title: "With Love",
+                credits: [
+                    { role: "Mixed by", name: "Sean Kenney, Dad Mode Audio" },
+                    { role: "Mastered by", name: "Kevin Embleton" },
+                    { role: "Drums", name: "Derek Swink" },
+                    { role: "Bass Guitar", name: "Derek Swink" }
+                ]
+            },
+            aloop: {
+                title: "A Loop",
+                credits: [
+                    { role: "Mixed by", name: "Sean Kenney, Dad Mode Audio" },
+                    { role: "Mastered by", name: "Kevin Embleton" },
+                    { role: "Drums", name: "AJ Capuano / Doe Denim" },
+                    { role: "Additional Keys", name: "Brandon Lucas Green / Kid Lightbulbs" }
+                ]
+            },
+            flicker: {
+                title: "Flicker",
+                credits: [
+                    { role: "Mixed by", name: "Sean Kenney, Dad Mode Audio" },
+                    { role: "Mastered by", name: "Kevin Embleton" },
+                    { role: "Drums", name: "Derek Swink" }
+                ]
+            },
+            goodbehavior: {
+                title: "Good Behavior",
+                credits: [
+                    { role: "Mixed by", name: "Sean Kenney, Dad Mode Audio" },
+                    { role: "Mastered by", name: "Kevin Embleton" }
+                ]
+            },
+            halfalive: {
+                title: "Half Alive",
+                credits: [
+                    { role: "Mixed by", name: "Sean Kenney, Dad Mode Audio" },
+                    { role: "Mastered by", name: "Kevin Embleton" },
+                    { role: "Drums", name: "Derek Swink" },
+                    { role: "Bass", name: "Tony Solis" }
+                ]
+            }
+        };
+        
+        const creditsModal = document.getElementById('creditsModal');
+        const creditsModalTitle = document.getElementById('creditsModalTitle');
+        const creditsList = document.getElementById('creditsList');
+        const creditsModalClose = document.getElementById('creditsModalClose');
+        
+        function openCreditsModal(songId) {
+            const data = creditsData[songId];
+            if (!data) return;
+            
+            creditsModalTitle.textContent = data.title;
+            creditsList.innerHTML = data.credits.map(c => 
+                `<li><span class="credits-role">${c.role}</span><span class="credits-name">${c.name}</span></li>`
+            ).join('');
+            
+            creditsModal.classList.add('active');
+        }
+        
+        function closeCreditsModal() {
+            creditsModal.classList.remove('active');
+        }
+        
+        document.querySelectorAll('.credits-link').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openCreditsModal(btn.dataset.song);
+            });
+        });
+        
+        creditsModalClose.addEventListener('click', closeCreditsModal);
+        
+        creditsModal.addEventListener('click', (e) => {
+            if (e.target === creditsModal) {
+                closeCreditsModal();
             }
         });
     </script>
