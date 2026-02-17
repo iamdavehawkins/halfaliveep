@@ -582,6 +582,200 @@
             padding: 0;
         }
         
+        /* Sticky Bottom Player */
+        .sticky-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--color-charcoal);
+            border-top: 1px solid var(--color-secondary);
+            padding: 0;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .sticky-player.active {
+            transform: translateY(0);
+        }
+        
+        .sticky-player-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 12px 20px;
+        }
+        
+        .sticky-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .sticky-play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .sticky-play-btn:hover {
+            background: var(--color-accent);
+        }
+        
+        .sticky-play-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--color-paper);
+        }
+        
+        .sticky-play-btn:hover svg {
+            fill: var(--color-charcoal);
+        }
+        
+        .sticky-track-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .sticky-track-title {
+            font-family: 'Degular Text', Georgia, serif;
+            font-size: 0.95em;
+            color: var(--color-paper);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sticky-track-artist {
+            font-family: 'Vulf Mono', 'Courier New', monospace;
+            font-size: 0.7em;
+            font-style: italic;
+            color: var(--color-secondary);
+        }
+        
+        .sticky-progress-container {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sticky-progress-bar-wrapper {
+            flex: 1;
+            height: 6px;
+            background: rgba(79, 106, 137, 0.3);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .sticky-progress-bar {
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .sticky-time {
+            font-family: 'Vulf Mono', 'Courier New', monospace;
+            font-size: 0.7em;
+            font-style: italic;
+            color: var(--color-secondary);
+            min-width: 35px;
+        }
+        
+        .sticky-close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--color-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+        
+        .sticky-close-btn:hover {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            opacity: 1;
+        }
+        
+        .sticky-close-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--color-paper);
+        }
+        
+        /* Sticky Lyrics */
+        .sticky-lyrics {
+            text-align: center;
+            padding: 10px 0 0 0;
+            border-top: 1px solid rgba(79, 106, 137, 0.2);
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .sticky-lyrics.active {
+            display: block;
+        }
+        
+        .sticky-lyrics-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .sticky-lyric-line {
+            font-family: 'Degular Text', Georgia, serif;
+            transition: all 0.3s ease-out;
+            line-height: 1.3;
+        }
+        
+        .sticky-lyric-line.prev {
+            font-size: 0.75em;
+            color: var(--color-secondary);
+            opacity: 0.4;
+        }
+        
+        .sticky-lyric-line.current {
+            font-size: 0.9em;
+            color: var(--color-accent);
+        }
+        
+        .sticky-lyric-line.next {
+            font-size: 0.75em;
+            color: var(--color-secondary);
+            opacity: 0.4;
+        }
+        
+        .sticky-lyric-line.intro {
+            font-family: 'Vulf Mono', 'Courier New', monospace;
+            font-size: 0.65em;
+            font-style: italic;
+            color: var(--color-secondary);
+            opacity: 0.6;
+        }
+        
+        /* Add bottom padding to body when sticky player is active */
+        body.player-active {
+            padding-bottom: 120px;
+        }
+        
         /* Credits Link */
         .credits-link {
             font-family: 'Vulf Mono', 'Courier New', monospace;
@@ -1049,6 +1243,27 @@
                 width: 18px;
                 height: 18px;
             }
+            
+            /* Sticky player responsive */
+            .sticky-player-inner {
+                padding: 10px 15px;
+            }
+            
+            .sticky-player-controls {
+                gap: 10px;
+            }
+            
+            .sticky-progress-container {
+                flex: 1.5;
+            }
+            
+            .sticky-track-info {
+                max-width: 100px;
+            }
+            
+            body.player-active {
+                padding-bottom: 140px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1089,6 +1304,36 @@
             
             .song-links {
                 grid-template-columns: 1fr;
+            }
+            
+            /* Sticky player mobile */
+            .sticky-player-controls {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .sticky-progress-container {
+                order: 3;
+                flex: 1 1 100%;
+            }
+            
+            .sticky-track-info {
+                max-width: none;
+                flex: 1;
+            }
+            
+            .sticky-play-btn {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .sticky-close-btn {
+                width: 28px;
+                height: 28px;
+            }
+            
+            body.player-active {
+                padding-bottom: 160px;
             }
         }
         
@@ -1377,6 +1622,45 @@
         <p>&copy; <script>document.write(new Date().getFullYear());</script> Dave Hawkins | <a href="https://links.iamdavehawkins.com">iamdavehawkins.com</a></p>
     </footer>
 
+    <!-- Sticky Bottom Player -->
+    <div class="sticky-player" id="stickyPlayer">
+        <div class="sticky-player-inner">
+            <div class="sticky-player-controls">
+                <button class="sticky-play-btn" id="stickyPlayBtn" aria-label="Play/Pause">
+                    <svg class="sticky-icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="sticky-icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <div class="sticky-track-info">
+                    <div class="sticky-track-title" id="stickyTrackTitle">—</div>
+                    <div class="sticky-track-artist">Dave Hawkins</div>
+                </div>
+                <div class="sticky-progress-container">
+                    <span class="sticky-time" id="stickyCurrentTime">0:00</span>
+                    <div class="sticky-progress-bar-wrapper" id="stickyProgressWrapper">
+                        <div class="sticky-progress-bar" id="stickyProgressBar"></div>
+                    </div>
+                    <span class="sticky-time" id="stickyTotalTime">0:00</span>
+                </div>
+                <button class="sticky-close-btn" id="stickyCloseBtn" aria-label="Close player">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="sticky-lyrics" id="stickyLyrics">
+                <div class="sticky-lyrics-scroll">
+                    <div class="sticky-lyric-line prev" id="stickyLyricPrev"></div>
+                    <div class="sticky-lyric-line current" id="stickyLyricCurrent"></div>
+                    <div class="sticky-lyric-line next" id="stickyLyricNext"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Credits Modal -->
     <div class="credits-modal" id="creditsModal">
         <div class="credits-modal-content">
@@ -1401,6 +1685,22 @@
         const lyricPrev = document.getElementById('lyricPrev');
         const lyricCurrent = document.getElementById('lyricCurrent');
         const lyricNext = document.getElementById('lyricNext');
+        
+        // Sticky player elements
+        const stickyPlayer = document.getElementById('stickyPlayer');
+        const stickyPlayBtn = document.getElementById('stickyPlayBtn');
+        const stickyTrackTitle = document.getElementById('stickyTrackTitle');
+        const stickyProgressBar = document.getElementById('stickyProgressBar');
+        const stickyProgressWrapper = document.getElementById('stickyProgressWrapper');
+        const stickyCurrentTime = document.getElementById('stickyCurrentTime');
+        const stickyTotalTime = document.getElementById('stickyTotalTime');
+        const stickyCloseBtn = document.getElementById('stickyCloseBtn');
+        const stickyLyrics = document.getElementById('stickyLyrics');
+        const stickyLyricPrev = document.getElementById('stickyLyricPrev');
+        const stickyLyricCurrent = document.getElementById('stickyLyricCurrent');
+        const stickyLyricNext = document.getElementById('stickyLyricNext');
+        const stickyIconPlay = stickyPlayBtn.querySelector('.sticky-icon-play');
+        const stickyIconPause = stickyPlayBtn.querySelector('.sticky-icon-pause');
         
         const artistName = "Dave Hawkins";
         
@@ -1638,6 +1938,38 @@
                     lyricNext.textContent = '';
                     lyricNext.classList.add('hidden');
                 }
+                
+                // Update sticky lyrics
+                updateStickyLyrics();
+            }
+        }
+        
+        function updateStickyLyrics() {
+            if (!currentLyrics) return;
+            
+            if (currentLyricIndex > 0) {
+                stickyLyricPrev.textContent = currentLyrics[currentLyricIndex - 1].text;
+                stickyLyricPrev.classList.remove('intro');
+            } else if (currentLyricIndex === 0) {
+                stickyLyricPrev.textContent = '';
+            } else {
+                stickyLyricPrev.textContent = '';
+            }
+            
+            if (currentLyricIndex >= 0) {
+                stickyLyricCurrent.textContent = currentLyrics[currentLyricIndex].text;
+                stickyLyricCurrent.classList.remove('intro');
+            } else {
+                stickyLyricCurrent.textContent = `${currentSongTitle} — Lyrics`;
+                stickyLyricCurrent.classList.add('intro');
+            }
+            
+            if (currentLyricIndex < currentLyrics.length - 1 && currentLyricIndex >= 0) {
+                stickyLyricNext.textContent = currentLyrics[currentLyricIndex + 1].text;
+            } else if (currentLyricIndex === -1 && currentLyrics.length > 0) {
+                stickyLyricNext.textContent = currentLyrics[0].text;
+            } else {
+                stickyLyricNext.textContent = '';
             }
         }
         
@@ -1647,6 +1979,12 @@
                 progressBar.style.width = percent + '%';
                 currentTimeEl.textContent = formatTime(audio.currentTime);
                 totalTimeEl.textContent = formatTime(audio.duration);
+                
+                // Update sticky player progress
+                stickyProgressBar.style.width = percent + '%';
+                stickyCurrentTime.textContent = formatTime(audio.currentTime);
+                stickyTotalTime.textContent = formatTime(audio.duration);
+                
                 if (currentLyrics) {
                     updateLyrics(audio.currentTime);
                 }
@@ -1669,6 +2007,7 @@
                 audio.pause();
                 trackEl.querySelector('.icon-play').style.display = 'block';
                 trackEl.querySelector('.icon-pause').style.display = 'none';
+                updateStickyPlayPauseIcon();
                 return;
             }
             
@@ -1698,6 +2037,41 @@
             
             nowPlaying.classList.add('active');
             nowPlayingTitle.textContent = title;
+            
+            // Show sticky player
+            showStickyPlayer(title);
+        }
+        
+        function showStickyPlayer(title) {
+            stickyPlayer.classList.add('active');
+            document.body.classList.add('player-active');
+            stickyTrackTitle.textContent = title;
+            stickyIconPlay.style.display = 'none';
+            stickyIconPause.style.display = 'block';
+            
+            // Show sticky lyrics if track has lyrics
+            if (currentLyrics) {
+                stickyLyrics.classList.add('active');
+                updateStickyLyrics();
+            } else {
+                stickyLyrics.classList.remove('active');
+            }
+        }
+        
+        function hideStickyPlayer() {
+            stickyPlayer.classList.remove('active');
+            document.body.classList.remove('player-active');
+            stickyLyrics.classList.remove('active');
+        }
+        
+        function updateStickyPlayPauseIcon() {
+            if (audio.paused) {
+                stickyIconPlay.style.display = 'block';
+                stickyIconPause.style.display = 'none';
+            } else {
+                stickyIconPlay.style.display = 'none';
+                stickyIconPause.style.display = 'block';
+            }
         }
         
         // Attach click handlers
@@ -1716,6 +2090,49 @@
             }
         });
         
+        // Sticky progress bar click to seek
+        stickyProgressWrapper.addEventListener('click', (e) => {
+            if (audio.duration) {
+                const rect = stickyProgressWrapper.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                audio.currentTime = percent * audio.duration;
+            }
+        });
+        
+        // Sticky play/pause button
+        stickyPlayBtn.addEventListener('click', () => {
+            if (currentTrack) {
+                if (audio.paused) {
+                    audio.play();
+                    currentTrack.querySelector('.icon-play').style.display = 'none';
+                    currentTrack.querySelector('.icon-pause').style.display = 'block';
+                } else {
+                    audio.pause();
+                    currentTrack.querySelector('.icon-play').style.display = 'block';
+                    currentTrack.querySelector('.icon-pause').style.display = 'none';
+                }
+                updateStickyPlayPauseIcon();
+            }
+        });
+        
+        // Sticky close button - stop audio and hide player
+        stickyCloseBtn.addEventListener('click', () => {
+            audio.pause();
+            audio.currentTime = 0;
+            if (currentTrack) {
+                currentTrack.classList.remove('playing');
+                currentTrack.querySelector('.icon-play').style.display = 'block';
+                currentTrack.querySelector('.icon-pause').style.display = 'none';
+            }
+            nowPlaying.classList.remove('active');
+            lyricsPlayer.classList.remove('active');
+            hideStickyPlayer();
+            currentTrack = null;
+            currentLyrics = null;
+            currentSongTitle = null;
+            currentLyricIndex = -1;
+        });
+        
         // Update progress
         audio.addEventListener('timeupdate', updateProgress);
         
@@ -1732,6 +2149,7 @@
                 currentTrack.querySelector('.icon-pause').style.display = 'none';
                 nowPlaying.classList.remove('active');
                 lyricsPlayer.classList.remove('active');
+                hideStickyPlayer();
                 currentTrack = null;
                 currentLyrics = null;
                 currentSongTitle = null;
