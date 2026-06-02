@@ -107,7 +107,7 @@
             line-height: 1.4; 
             max-width: 600px; 
             margin: 0 auto; 
-            padding: 10px; 
+            padding: 10px 10px 80px 10px; 
             background: #f6f6f6;
             background-image: 
                 repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.01) 2px, rgba(0,0,0,.01) 4px),
@@ -151,21 +151,35 @@
         .progress { width: 100%; height: 10px; background: #ccc; margin: 5px 0; }
         .progress-fill { height: 100%; background: #666; width: 0%; }
         .now-playing { 
-            margin: 10px 0; 
-            padding: 8px; 
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            padding: 8px 12px;
             background: #fff;
-            border: 2px inset #999;
-            display: none; 
+            border-top: 2px solid #333;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 9999;
+            font-size: 12px;
+            box-sizing: border-box;
         }
         .now-playing.active { display: block; }
-        .lyrics { 
-            margin: 8px 0 0 0; 
-            padding: 8px 0 0 12px;
-            border-left: 3px solid #999;
-            font-size: 12px; 
+        .now-playing br { display: none; }
+        .now-playing #currentTime, .now-playing #totalTime { display: inline; }
+        .now-playing .progress { height: 6px; margin: 4px 0; }
+        .now-playing .lyrics { 
+            margin: 4px 0 0 0; 
+            padding: 0 0 0 10px;
+            border-left: 2px solid #999;
+            font-size: 11px; 
             color: #444; 
             font-style: italic; 
-            min-height: 18px; 
+            min-height: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .credits-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); }
         .credits-modal.active { display: flex; align-items: center; justify-content: center; }
@@ -243,6 +257,16 @@
             background: #00c;
             padding: 0 2px;
         }
+        .track-video {
+            margin-top: 10px;
+            padding: 8px;
+            background: #000;
+            border: 1px solid #333;
+        }
+        .track-video video {
+            max-width: 100%;
+            display: block;
+        }
         .track-number { 
             margin-right: 8px; 
             font-family: 'Courier New', monospace;
@@ -281,7 +305,7 @@
 
 <h3>listen + download (free)</h3>
 <ul>
-    <li class="track" data-src="audio/01 With Love.wav">
+    <li class="track" data-src="audio/01 With Love.wav" data-video="video/withlove.mp4">
         <span class="track-number">1</span>
         <button class="play-btn" aria-label="Play With Love">
             <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -300,8 +324,11 @@
         <a href="audio/01 With Love.wav" download class="download-link" aria-label="Download With Love">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
         </a>
+        <div class="track-video" style="display: none;">
+            <video muted preload="metadata" width="100%"></video>
+        </div>
     </li>
-    <li class="track" data-src="audio/02 A Loop.wav">
+    <li class="track" data-src="audio/02 A Loop.wav" data-video="video/aloop.mp4">
         <span class="track-number">2</span>
         <button class="play-btn" aria-label="Play A Loop">
             <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -320,6 +347,9 @@
         <a href="audio/02 A Loop.wav" download class="download-link" aria-label="Download A Loop">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
         </a>
+        <div class="track-video" style="display: none;">
+            <video muted preload="metadata" width="100%"></video>
+        </div>
     </li>
     <li class="track" data-src="audio/03 Flicker.wav">
         <span class="track-number">3</span>
@@ -465,6 +495,8 @@ const audio = new Audio();
 let currentTrackEl = null;
 let currentLyrics = null;
 let currentLyricIndex = -1;
+
+let currentVideo = null;
 
 const allLyrics = {
             "With Love": [
@@ -689,13 +721,34 @@ function playTrack(el) {
     }
     
     if (currentTrackEl !== el) {
+        // Hide previous video if any
+        if (currentVideo) {
+            currentVideo.pause();
+            currentVideo.parentElement.style.display = 'none';
+            currentVideo = null;
+        }
+        
         audio.src = src;
         currentTrackEl = el;
         currentLyrics = allLyrics[title] || null;
         currentLyricIndex = -1;
+        
+        // Handle inline video
+        const videoSrc = el.dataset.video;
+        if (videoSrc) {
+            const videoContainer = el.querySelector('.track-video');
+            const video = videoContainer.querySelector('video');
+            video.src = videoSrc;
+            videoContainer.style.display = 'block';
+            currentVideo = video;
+        }
     }
     
     audio.play();
+    if (currentVideo) {
+        currentVideo.currentTime = 0;
+        currentVideo.play();
+    }
     const btn = el.querySelector('.play-btn');
     btn.querySelector('.icon-play').style.display = 'none';
     btn.querySelector('.icon-pause').style.display = 'inline';
@@ -709,12 +762,14 @@ function togglePlay() {
     const ctrlBtn = document.getElementById('playPauseBtn');
     if (audio.paused) {
         audio.play();
+        if (currentVideo) currentVideo.play();
         const btn = currentTrackEl.querySelector('.play-btn');
         btn.querySelector('.icon-play').style.display = 'none';
         btn.querySelector('.icon-pause').style.display = 'inline';
         ctrlBtn.textContent = 'pause';
     } else {
         audio.pause();
+        if (currentVideo) currentVideo.pause();
         const btn = currentTrackEl.querySelector('.play-btn');
         btn.querySelector('.icon-play').style.display = 'inline';
         btn.querySelector('.icon-pause').style.display = 'none';
@@ -730,6 +785,13 @@ function stopTrack() {
         btn.querySelector('.icon-play').style.display = 'inline';
         btn.querySelector('.icon-pause').style.display = 'none';
     }
+    // Hide and reset video
+    if (currentVideo) {
+        currentVideo.pause();
+        currentVideo.currentTime = 0;
+        currentVideo.parentElement.style.display = 'none';
+        currentVideo = null;
+    }
     document.getElementById('nowPlaying').classList.remove('active');
     document.getElementById('playPauseBtn').textContent = 'play';
     currentTrackEl = null;
@@ -739,7 +801,9 @@ function stopTrack() {
 function seek(e) {
     if (!audio.duration) return;
     const rect = e.target.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    const newTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    audio.currentTime = newTime;
+    if (currentVideo) currentVideo.currentTime = newTime;
 }
 
 function showCredits(id) {
